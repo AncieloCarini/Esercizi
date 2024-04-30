@@ -347,3 +347,4 @@ for x in current_users:
     for y in new_users:
         if y == x :
             print(f"{y}, gia in uso")
+ewf
