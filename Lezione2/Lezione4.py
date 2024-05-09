@@ -293,7 +293,7 @@ The function should have one parameter that collects as many items as the functi
 and it should print a summary of the sandwich that’s being ordered.
 Call the function three times, using a different number of arguments each time.
 
-
+'''
 def order_sandwich(*items):
     sandwich: list = items
     print(f"menu: {sandwich}\n")
@@ -301,8 +301,7 @@ def order_sandwich(*items):
 order_sandwich('pollo', 'pesce', 'manzo', 'maiale')
 order_sandwich('insalata', 'pomodoro', 'cetrioli', 'bacon')
 order_sandwich('ketchup', 'bbq', 'maionese', 'senape')
-
-    
+'''
 
 8-13. User Profile:  Build a profile of yourself by calling build_profile(),
  using your first and last names and three other key-value pairs that describe you. 
@@ -379,4 +378,3 @@ print(summation(3.7,14),end="\n\n")
 8-17. Styling Functions: Choose any three programs you wrote for this chapter, 
 and make sure they follow the styling guidelines described in this section.
 '''
-
