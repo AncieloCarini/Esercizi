@@ -2,7 +2,7 @@
 # In questo problema ricreerete la classica gara tra la tartaruga e la lepre.
 # Userete la generazione di numeri casuali per sviluppare una simulazione di questo memorabile evento.
 # I contendenti iniziano la gara dal quadrato \#1 di un percorso composto da 70 quadrati. 
-# gni quadrato rappresenta una posizione lungo il percorso della corsa. Il traguardo è al quadrato 70 
+# ogni quadrato rappresenta una posizione lungo il percorso della corsa. Il traguardo è al quadrato 70 
 # e il contendente che raggiunge per primo o supera questa posizione vince la gara. Durante la corsa,
 # i contendenti possono occasionalmente perdere terreno. C'è un orologio che conta i secondi. Ad ogni tick dell'orologio,
 # il vostro programma deve aggiornare la posizione degli animali secondo le seguenti regole:
@@ -55,14 +55,19 @@
 
 
 
-
+'''
 import random  
 T = "T"
 H = "H"
 
 
 lunghezza = 70
-pista: list = ['_'] * lunghezza
+#pista: list = ['_'] * lunghezza
+
+
+pista = [('_', '_')] *lunghezza
+pista[0] = ('T', 'H')
+
 
 
 def print_pista(tartaruga_mosse, lepre_mosse):
@@ -114,6 +119,84 @@ print(" BANG !!!!! AND THEY'RE OFF !!!!!")
 
 
 #print(print_pista(tartaruga_move(), lepre_move()))
+lepre_move()
+tartaruga_move()
 
 print(pista)
 
+'''
+
+
+
+
+
+
+
+# Write a function to find all numbers divisible by 7, not a multiple of 5, between 2000 and 3200 (both included). 
+# The numbers should be stored in a list and returned as output.
+
+'''
+def find_numbers():
+    result = []
+    for num in range(2000, 3201):
+        if num % 7 == 0 and num % 5!= 0:
+            result.append(num)
+    return result
+
+print(find_numbers())
+
+'''
+
+
+#Write a function to calculate the factorial of a number given as input. The number should be returned as output. For example:
+
+    #Input: 8
+    #Output: 40320
+
+'''
+def fattoriale(num):
+    if num == 0:
+        return 1
+    else:
+        return num * fattoriale(num - 1)
+
+n = int(input('enter a number:'))
+print('fattoriale di', n, 'è', fattoriale(n))
+'''
+    
+
+
+
+# se the function implemented in Exercise 2 to compute all factorial numbers of a list of numbers.
+# The list is given as input to the function. All factorials should be returned as output. For example:
+
+#     Input: [2, 5, 8, 10]
+#     Output: [2, 120, 40320, 3628800]
+'''
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n-1)
+
+def compute_factorials(numbers):
+    return [factorial(num) for num in numbers]
+
+numbers = [7, 18, 27, 150]
+print("Factorials of", numbers, "are", compute_factorials(numbers))
+'''
+
+
+
+
+# Given an integer n as input, write a function to generate a dictionary that contains (i, i*i) as (key, value)
+# pairs such that i is an integer between 1 and n (both included). The function should return the dictionary as output. For example:
+
+#     Input: 8
+#     Output: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25, 6: 36, 7: 49, 8: 64}
+
+def generate_dict(n):
+    return {i: i*i for i in range(1, n+1)}      # esempio n = 4  ovvero 1x1 2x2 3x3 4x4 
+
+n = 12
+print(generate_dict(n))
