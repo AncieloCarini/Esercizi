@@ -136,10 +136,41 @@ for numero in range(len(lista)):           #in questo caso si sta prendendo la p
 
 contatore: int = 0                          # while necessita di un contatore
 while contatore < len(lista):               #il ciclo while serve per ripetere più volte la stessa istruzione finche non viene interrotta
-
+                                            # ad esempio scorrere la lista all'infinito
     print(f'x^2: {lista[contatore]**2}')
     contatore += 1
     
+
+for i in range(10):           # (i) sta per indice ovvero posizione
+    if i == 2:                #esempio di continue e permette di skippare le azioni successive esempio
+                              # lista = 1 2 3 4 5   se i == 2  la lista viene letta cosi 1 3 4 5 
+        continue
+    print(i)
+
+
+for i in range(10):
+    if i == 2:                #con il break invece se i == 2 smette di scorrere la lista 
+                              
+        break
+    print(i)
+
+
+
+
+
+
+
+
+set_vals = {1, 2, 3, 4, 5}         #questo è un for loop semplicemente stampa in colonna tutti i numeri
+for x in set_vals:
+    print(x)
+
+
+dict_vals = {1:1, 2:2 , 3:3 , 4:4 , 5:5}         #questo è un for loop di un dizionario MOLTO utile per stampare il diz. in colonna
+for x in dict_vals:
+    print(x,dict_vals[x])
+
+
 
 
 
@@ -201,4 +232,14 @@ a: list = [1,2]           #lista modificabile
 b: tuple = (1,2)          #la tupla no
  
 a[0] = 3
-b[0] = 3
+#b[0] = 3
+
+
+
+
+def say_hello() -> str:          
+                                    #esempio banale di come usare un def
+    print('hello')
+
+say_hello()
+ 
