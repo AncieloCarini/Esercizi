@@ -136,7 +136,7 @@ then prints each item from that store's shopping list.
 Example: print_shopping_list(dictionary, "Grocery Store")
 
 
-
+'''
 def create_shopping_list(negozio: str, cose: int, lista: str) -> dict:
     comprare= {}
     comprare['negozio']= negozio
@@ -149,4 +149,4 @@ cose: int= 2
 lista: str= 'pesce', 'carne'
 shopping= create_shopping_list(negozio, cose, lista)
 print(shopping)
-'''
+
