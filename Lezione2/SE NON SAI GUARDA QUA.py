@@ -77,7 +77,7 @@ Implement a for loop to iterate over the items in the cart and print detailed
 information about each product and the total.
 '''
 
-'''
+
 class Product:
     def __init__(self, name: str, price: int, quantity: int) -> None:
         self.name= name
