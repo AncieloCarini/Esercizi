@@ -140,17 +140,19 @@ class Restaurant:
 
 
 
-def open_restaurant():
-    print("The restaurant is open!")
-    restaurant = Restaurant()
-    print(restaurant.restaurant_name)
-    print(restaurant.cuisine_type)
-    print(restaurant.number_served)
-    restaurant.number_served = 0
-    print(restaurant.number_served)
-    restaurant.set_number_served(10)
-    print(restaurant.number_served)
-    restaurant.increment_number_served(5)
+            def open_restaurant():
+                print("The restaurant is open!")
+                restaurant = Restaurant()
+                print(restaurant.restaurant_name)
+                print(restaurant.cuisine_type)
+                print(restaurant.number_served)
+                restaurant.number_served = 0
+                print(restaurant.number_served)
+                restaurant.set_number_served(10)
+                print(restaurant.number_served)
+                restaurant.increment_number_served(5)
+
+
 
 
             
