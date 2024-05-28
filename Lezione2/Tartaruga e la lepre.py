@@ -55,70 +55,216 @@
 
 
 
-import random  
-T = "T"
-H = "H"
+from random import choices
+from random import randint
 
 
-lunghezza = 70
-#pista: list = ['_'] * lunghezza
+def turtle_walk_speed(t_token, t_energy, weather: bool = False) -> int:
+    
+
+    
+    
+    walking_speed: list[int] = [3, 1, -6]
+    
+    weight: list[float] = [0.5, 0.3, 0.2]
+    
+    chosen: int = choices(walking_speed, weight)[0]
+    
+    index: int = walking_speed.index(chosen)
+
+    if index == 0:
+        t_energy -= 5
+    elif index == 1:
+        t_energy -= 3
+    else:
+        t_energy -= 10
+    if t_energy < 0:
+        t_energy = 10
+    else:
+        t_token += chosen - 1 if weather else chosen
+
+    return t_token, t_energy
 
 
-pista = [('_', '_')] *lunghezza
-pista[0] = ('T', 'H')
+def hare_walk_speed(h_token, h_energy, weather: bool = False) -> int:
+    
+    
+    walking_speed: list[int] = [0, 9, -12, 1, -2]
+    
+    weight: float = [0.2, 0.2, 0.1, 0.3, 0.2]
+    
+    chosen: int = choices(walking_speed, weight)[0]
+    
+    index: int = walking_speed.index(chosen)
+    
+    temp: int = h_energy
+    if index == 0:
+        h_energy += 10
+        h_energy = min(h_energy, 100)
+    elif index == 1:
+        temp -= 15
+    elif index == 2:
+        temp -= 20
+    elif index == 3:
+        temp -= 5
+    elif index == 4:
+        temp -= 8
+    if temp >= 0:
+        h_token += chosen - 2 if weather and chosen != 0 else chosen
+        h_energy = temp
+
+    return h_token, h_energy
 
 
+def bonuses_obstacles(token: int, t_name: str, obstacles: dict, bonuses: dict, max_len: int) -> int:
+    
+    checking: list = []
+    values: list = []
+    checking_len: int = 0
+    start_token: int = token
+    while True:
+        if token in checking:
+            print(f"The {t_name} got out of the loop")
+            break
+        if token in obstacles.keys():
+            print(f"The {t_name} hit an obstacle of {obstacles[token]} on position {token}")
+            checking.append(token)
+            values.append(obstacles[token])
+            token += obstacles[token]
+        if token in checking:
+            print(f"The {t_name} got out of the loop")
+            break
+        if token in bonuses.keys():
+            print(f"The {t_name} got a bonus {bonuses[token]} on position {token}")
+            checking.append(token)
+            values.append(bonuses[token])
+            token += bonuses[token]
+        if checking_len == len(checking):
+            break
+        checking_len = len(checking)
+    if checking:
+        if len(checking) > 1:
+            print(f"\nThe total amount of movement was {sum(values)} for the {t_name}:")
+        print(f"started from {start_token} ended to {min(token,max_len) if token > max_len else max(token,0)}\n")
+    return token
 
-def print_pista(tartaruga_mosse, lepre_mosse):
-    for i in range(70):
-        if i == tartaruga_mosse:
-            print('T', end='')
-        elif i == lepre_mosse:
-            print('H', end='')
-        elif i == tartaruga_mosse and lepre_mosse:
-            print('OUCH!', end='')
+
+def check(t: int, h: int, length: int, **kwargs) -> bool:
+  
+
+    route = kwargs["route"]
+    weather = kwargs["weather"]
+    i = kwargs["i"]
+
+    if t >= length and h >= length:
+        route[-1] = "X"
+        print(f"Last Round: {i}")
+        print("It's raining ☂" if weather else "It's sunny ☀︎")
+        show_route(route)
+        print("\nIT'S A TIE.")
+        print(f"\nroute length: {length}\n")
+        return True
+    if t >= length:
+        route[h if h >= 0 else 0] = "H"
+        route[-1] = "T"
+        print(f"Last Round: {i}")
+        show_route(route)
+        print("\nTURTLE WINS! || YAY!!!")
+        print(f"\nroute length: {length}\n")
+        return True
+    if h >= length:
+        route[t if t >= 0 else 0] = "T"
+        route[-1] = "H"
+        print(f"Last Round: {i}")
+        show_route(route)
+        print("\nHARE WINS || YUCH!!!")
+        print(f"\nroute length: {length}\n")
+        return True
+    return False
+
+
+def show_route(route: list[str]) -> None:
+    
+    for char in route:
+        print(f"{char}", end="")
+    print(end="\n\n")
+
+
+def start_simulation() -> None:
+   
+    
+    route: list[str] = ["_"]*randint(25, 100)
+    max_len: int = len(route) - 1
+    
+    interval: int = round(max_len * 0.1)
+    
+    obstacles: dict = {k: -v for k, v in zip(
+        range(1, max_len+1),
+        [randint(1, max_len//10) for _ in range(1, max_len+1)])
+        if k % interval == 0}
+    
+    bonuses: dict = {k: v for k, v in zip(
+        [randint(1, max_len-1) for _ in range(len(obstacles.values()))],
+        [randint(1, max_len//10)+3 for _ in range(1, max_len+1)])
+        if k not in list(obstacles.keys())}
+    i: int = 1
+    weather: bool = False
+    t_token: int = 0
+    t_energy: int = 100
+    h_token: int = 0
+    h_energy: int = 100
+    prev_t: int = 0
+    prev_h: int = 0
+
+    
+    print("\nBANG !!!!! AND THEY'RE OFF !!!!!\n")
+    while True:
+        route[t_token], route[h_token] = "_", "_"
         
+        if (i-1) % 10 == 0:
+            weather = choices([True, False], [0.5, 0.5])[0]
         
+        prev_t, prev_h = t_token, h_token
+        
+        t_token, t_energy = turtle_walk_speed(t_token, t_energy, weather)
+        h_token, h_energy = hare_walk_speed(h_token, h_energy, weather)
+        
+        t_token = bonuses_obstacles(t_token, "turtle", obstacles, bonuses, max_len)
+        h_token = bonuses_obstacles(h_token, "hare", obstacles, bonuses, max_len)
+        
+        if check(t_token, h_token, max_len, route=route, weather=weather, i=i):
+            break
+        
+        t_token = max(t_token, 0)
+        h_token = max(h_token, 0)
+        # changes route
+        if t_token == h_token:
+            route[t_token] = 'X'
+        else:
+            route[t_token] = 'T'
+            route[h_token] = 'H'
+        
+        print(f"Round: {i}", end=" ")
+        if i % 3 == 0 or i == 1:
+            print("- It's raining ☂" if weather else "- It's sunny ☀︎")
+        else:
+            print()
+        i += 1
+        show_route(route)
 
-def tartaruga_move():
-    posizioneT= pista.index('T')
-    x = random.randrange(1, 11)
-    if x <= 5:
-        pista[posizioneT + 3] = 'T'
-        posizioneT = pista.index('T')
-    elif x <= 7:
-        pista[posizioneT - 6] = 'T'
-        posizioneT = pista.index('T')
-    elif x <= 10:
-        pista[posizioneT + 1] = 'T'
-        posizioneT = pista.index('T')
+        print(f"Turtle moved: {t_token-prev_t},",
+              f" Turtle position: {t_token},",
+              f" Turtle energy: {t_energy}")
+
+        print(f"Hare moved: {h_token-prev_h},",
+              f" Hare position: {h_token},",
+              f"Hare energy: {h_energy}")
+
+        print("\n")
+        if i > 5000:
+            print("The race was too long. Neither won and everyone left.\n")
+            break
 
 
-def lepre_move():
-    posizioneH = pista.index('H')
-    x = random.randrange(1, 11)
-    if x <= 2:
-        pista[posizioneH + 0] = 'H'
-        posizioneH = pista.index('H')
-    elif x <= 4:
-        pista[posizioneH + 9] = 'H'
-        posizioneH = pista.index('H')
-    elif x <= 5:
-        pista[posizioneH - 12] = 'H'
-        posizioneH = pista.index('H')
-    elif x <= 8:
-        pista[posizioneH + 1] = 'H'
-        posizioneH = pista.index('H')
-    elif x <= 10:
-        pista[posizioneH - 2] = 'H'
-        posizioneH = pista.index('H')
-
-
-print(" BANG !!!!! AND THEY'RE OFF !!!!!")
-
-
-#print(print_pista(tartaruga_move(), lepre_move()))
-lepre_move()
-tartaruga_move()
-
-print(pista) 
+if __name__ == "__main__":
+    start_simulation()
