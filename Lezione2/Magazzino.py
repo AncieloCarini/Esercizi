@@ -44,6 +44,8 @@ magazzino.aggiungi_prodotto(Prodotto("Quaderno", 50))
 magazzino.aggiungi_prodotto(Prodotto("Matita", 75))
 
 
+
+
 nome_prodotto = "Matita"
 prodotto_cercato = magazzino.cerca_prodotto(nome_prodotto)
 
