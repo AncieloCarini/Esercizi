@@ -383,8 +383,6 @@ for favplace in posti:
 
 
 
-def Danydelf(nome: 'dio', cognome: 'Di Dio', Lavoro: 'Dio'):
-    print(f"nome: {nome}, cognome: {cognome}, lavoro: {Lavoro}")
 
 
 
