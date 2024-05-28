@@ -379,7 +379,12 @@ posti: list = [favplace_1, favplace_2, favplace_3]
 for favplace in posti:
     for k,v in favplace.items():
         print(f"{k} {v}")
+'''
 
+
+
+def Danydelf(nome: 'dio', cognome: 'Di Dio', Lavoro: 'Dio'):
+    print(f"nome: {nome}, cognome: {cognome}, lavoro: {Lavoro}")
 
 
 
