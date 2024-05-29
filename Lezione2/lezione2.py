@@ -379,6 +379,9 @@ posti: list = [favplace_1, favplace_2, favplace_3]
 for favplace in posti:
     for k,v in favplace.items():
         print(f"{k} {v}")
+'''
+
+
 
 
 
