@@ -70,6 +70,7 @@ class Sala:
     def posti_disponibili(self) -> str:
         return f"Posti disponibili: {self.posti_disponibili}"
     
+    
 
 
     

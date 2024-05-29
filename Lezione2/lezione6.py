@@ -112,48 +112,42 @@
 # Add a method called increment_number_served() that lets you increment the number of customers who’ve been served. 
 # Call this method with any number you like that could represent how many customers were served in, say, a day of business. 
 
-
-
-
-
-
+'''
 class Restaurant:
-    def __init__(self, restaurant_name, cuisine_type, number_served) -> str:
-        self.restaurant_name = restaurant_name
-        self.cuisine_type = cuisine_type
-        self.number_served = number_served
+    
+    def __init__(self, name: str, type: str, served: int = 0) -> None:
+        self.restaurant_name: str = name
+        self.cuisine_type: str = type
+        self.number_served: int = served if served > 0 else 0
+    
+    def set_number_served(self, served: int) -> None:
+        self.number_served = served if served > 0 else 0
+    
+    def increment_number_served(self, served: int = 1) -> None:
+        self.number_served += served
+
+restaurant5: Restaurant = Restaurant("La Catena","italian")
+print(restaurant5.number_served)
+restaurant5.number_served = 10
+print(restaurant5.number_served)
+restaurant5.set_number_served(3)
+print(restaurant5.number_served)
+for _ in range(5):
+    restaurant5.increment_number_served(3)
+print(restaurant5.number_served,end="\n\n")
+'''
 
 
 
 
 
-        def describe_Restaurant():
-            print(f"restaurant Name: {self.restaurant_name}")
-            print(f"cuisine Type: {self.cuisine_type}")
-            print(f"Number Served: {self.number_served}")
-            
 
-
-        def client_served():
-            print(f"Number of clients served: {self.number_served}")
-
-
-
-
-            def open_restaurant():
-                print("The restaurant is open!")
-                restaurant = Restaurant()
-                print(restaurant.restaurant_name)
-                print(restaurant.cuisine_type)
-                print(restaurant.number_served)
-                restaurant.number_served = 0
-                print(restaurant.number_served)
-                restaurant.set_number_served(10)
-                print(restaurant.number_served)
-                restaurant.increment_number_served(5)
-
-
-
+# 9-5. Login Attempts: Add an attribute called login_attempts to your User class from Exercise 9-3.
+# Write a method called increment_login_attempts() that increments the value of login_attempts by 1. 
+# Write another method called reset_login_attempts() that resets the value of login_attempts to 0.
+# Make an instance of the User class and call increment_login_attempts() several times.
+#  Print the value of login_attempts to make sure it was incremented properly, 
+# and then call reset_login_attempts(). Print login_attempts again to make sure it was reset to 0.
 
             
 
@@ -161,5 +155,42 @@ class Restaurant:
         
 
 
+class User:
+    def __init__(self, first_name, last_name, email, age, occupation, login_attempts):
 
-            
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.age = age
+        self.occupation = occupation
+        self.login_attempts = login_attempts
+        self.increment_login_attempts
+
+
+    def login_attempts(self):
+        return self.login_attempts
+    
+    def increment_login_attempts(self):
+        self.login_attempts += 1
+
+    
+    def reset_login_attempts(self):
+        self.login_attempts = 0
+
+    
+        #print(self.login_attempts)
+
+
+
+
+
+    def describe_user(self):
+        print(f"Name: {self.first_name} {self.last_name}")
+        print(f"Email: {self.email}")
+        print(f"Age: {self.age}")
+        print(f"Occupation: {self.occupation}")
+    
+    def greet_user(self):
+        print(f"Hello, {self.first_name} {self.last_name}!")
+
+
