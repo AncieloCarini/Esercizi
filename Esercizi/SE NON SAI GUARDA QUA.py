@@ -85,8 +85,8 @@ class Product:
         self.quantity= quantity
 
 
-
 prodotto_1: Product = Product(name='fanta', price= 1000, quantity= 100)
+
 prodotto_2: Product = Product(name='coca_cola', price= 10, quantity= 4)
 prodotto_3: Product = Product(name='sprite', price= 500, quantity= 1)
 

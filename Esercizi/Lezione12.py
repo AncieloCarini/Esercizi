@@ -38,7 +38,7 @@ class Libro:
 
 class Biblioteca:
     def __init__(self):
-        self.catalogo = []
+        self.catalogo: list[Libro] = []
     
     def aggiungi_libro(self, libro):
         titolo = input("Inserisci il titolo del libro: ")

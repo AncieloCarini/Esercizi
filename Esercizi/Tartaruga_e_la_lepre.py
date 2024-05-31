@@ -65,7 +65,6 @@ def turtle_walk_speed(t_token, t_energy, weather: bool = False) -> int:
     
     
     walking_speed: list[int] = [3, 1, -6]
-    
     weight: list[float] = [0.5, 0.3, 0.2]
     
     chosen: int = choices(walking_speed, weight)[0]

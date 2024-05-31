@@ -91,55 +91,49 @@ print(anagram("NeurIPS","UniReps"))
 #             deposit(account_id, amount): deposita l'importo specificato sul conto con l'ID fornito.
 #             get_balance(account_id): restituisce il saldo del conto con l'ID specificato.
 
-
-
-
-
+'''
 class Account:
-    def __init__(self, account_id: str, balance: float = 0.0):
-        self.account_id = account_id
+    def __init__(self, account: str, balance: float = 0) -> None:
+        self.account_id = account
         self.balance = balance
-        self.transactions = []
-    def deposit(self):
-        amount = float(input("Enter the amount to deposit: "))
-        self.balance += amount
-        self.transactions.append(f"Deposit: +{amount}")
-        print(f"Deposit successful. New balance: {self.balance}")
-        
-        
 
+    def deposit(self, amount: float) -> float:
+        self.balance += amount
+        
     def get_balance(self):
         return self.balance
-    def get_transactions(self):
-        return self.transactions
-
-
-
-
-        
-
+    
 
 class Bank:
-    def __init__(self):
+    def __init__(self) -> str:
         self.accounts = {}
 
-    def create_account(self, account_id: str):
+    def create_account(self, account_id)-> Account:
         if account_id not in self.accounts:
-            self.accounts[account_id] = Account(account_id)
+            new_account = Account(account_id)
+            self.accounts[account_id] = new_account
+            return new_account
         else:
-            print("Account already exists")
+            raise ValueError("Account with this ID already exists")
 
-    def deposit(self, account_id: str, amount: float):
+    
+    def deposit(self, account_id, amount):
         if account_id in self.accounts:
             self.accounts[account_id].deposit(amount)
         else:
-            print("Account does not exist")
-
-    def get_balance(self, account_id: str):
+            raise ValueError("Account not found")
+    
+    def get_balance(self, account_id):
         if account_id in self.accounts:
-            return self.accounts[account_id].get_balance()
+            return self.accounts[account_id].balance
         else:
-            print("Account does not exist")
+            raise ValueError("Account not found")
+
+    
+
+
+
+
 
 
 
@@ -147,11 +141,85 @@ bank = Bank()
 account1 = bank.create_account("123")
 print(account1.get_balance())
 
-	
+
 
 bank = Bank()
 account1 = bank.create_account("123")
 bank.deposit("123",100)
+print(bank.get_balance("123"))
+
+
+
+
+bank = Bank()
+account2 = bank.create_account("456")
+bank.deposit("456",200)
+print(bank.get_balance("456"))
+
+
+bank = Bank()
+account1 = bank.create_account("123")
+try:
+    bank.create_account("123")
+except ValueError as e:
+    print(e)
+
+
+
+
+
+ 	
+
+bank = Bank()
+try:
+    bank.get_balance("456")
+except ValueError as e:
+    print(e)
+'''
+
+
+
+
+
+# Data l'inizio di una lista concatenata, invertire la lista e restituire la lista invertita.
+
+
+'''
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+        
+def reverse_list(head: ListNode) -> list[int]:
+    prev = None
+    current = head
+    while current is not None:
+        next_node = current.next  
+        current.next = prev 
+        prev = current  
+        current = next_node
+    
+    reversed_head = prev
+    result= []
+    while reversed_head is not None:
+        result.append(reversed_head.val)
+        reversed_head = reversed_head.next
+
+    return result
+'''
+
+
+# Data una stringa s e una lista di stringhe wordDict, restituisce True se s può essere segmentato
+# in una sequenza separata da spazi di una o più parole del dizionario; False altrimenti.
+
+# Tieni presente che la stessa parola nel dizionario può essere riutilizzata più volte nella segmentazione.
+
+    
+
+
+
+
+def word_break(s: str, wordDict: list[str]) -> bool:
 
 
 
@@ -166,5 +234,8 @@ bank.deposit("123",100)
 
 
 
+print(word_break("leetcode",["leet","code"]))
 
+print(word_break("applepenapple", ["apple","pen"]))
 
+print(word_break("catsandog",["cats","dog","sand","and","cat"]))
