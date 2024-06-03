@@ -64,3 +64,4 @@ if prodotto_cercato:
         print(f"Il prodotto '{nome_prodotto}' non è disponibile nel magazzino.")
 else:
     print(f"Il prodotto '{nome_prodotto}' è esaurito.")
+    
