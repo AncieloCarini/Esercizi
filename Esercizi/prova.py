@@ -650,4 +650,701 @@ print(manager.list_ingredients("Pizza Margherita"))
 # nel formato "Marca: [marca], Modello: [modello], Anno: [anno], Tipo: [tipo]".
 
 
+'''
+class Veicolo:
+    def __init__(self, marca, modello, anno):
+        self.marca = marca
+        self.modello = modello
+        self.anno = anno
+    
+    def descrivi_veicolo(self):
+        print("" f"Marca: {self.marca}, Modello: {self.modello}, Anno: {self.anno}")
+    
+        
+class Auto(Veicolo):
+    def __init__(self, marca, modello, anno, numero_porte):
+        super().__init__(marca, modello, anno)
+        self.numero_porte = numero_porte
+    
+    def descrivi_veicolo(self):
+        print(f"Marca: {self.marca}, Modello: {self.modello}, Anno: {self.anno}, Numero di porte: {self.numero_porte}")    
 
+class Moto(Veicolo):
+    def __init__(self, marca, modello, anno, tipo):
+        super().__init__(marca, modello, anno)
+        self.tipo = tipo
+    def descrivi_veicolo(self):
+        print(f"Marca: {self.marca}, Modello: {self.modello}, Anno: {self.anno}, Tipo: {self.tipo}")
+    
+
+
+
+veicolo = Veicolo("Generic", "Model", 2020)
+auto = Auto("Toyota", "Corolla", 2021, 4)
+moto = Moto("Yamaha", "R1", 2022, "sportiva")
+
+veicolo.descrivi_veicolo() 
+auto.descrivi_veicolo()
+moto.descrivi_veicolo()
+'''
+
+
+
+
+# Obiettivo
+# L'obiettivo di questo esercizio è creare un modello semplice per simulare la crescita
+#  delle popolazioni di due specie animali usando la programmazione orientata agli oggetti in Python.
+
+# Descrizione del problema
+# Due specie animali, i Bufali Klingon e gli Elefanti, vivono in una riserva naturale.
+# Ogni specie ha una popolazione iniziale e un tasso di crescita annuo. Vogliamo sapere:
+# - In quanti anni la popolazione degli Elefanti supererà quella dei Bufali Klingon.
+# - in quanti anni la popolazione dei Bufali Klingon raggiungerà una densità di 1 individuo per km².
+ 
+# Specifiche tecniche
+
+# 1. Classe Specie
+# - Attributi:
+
+#     nome (str): Nome della specie.
+#     popolazione (int): Popolazione iniziale.
+#     tasso_crescita (float): Tasso di crescita annuo percentuale.
+
+# - Metodi:
+
+#     __init__(self, nome: str, popolazione_iniziale: int, tasso_crescita: float): 
+# Costruttore per inizializzare gli attributi della classe.
+#     cresci(self): Metodo per aggiornare la popolazione per l'anno successivo.
+#     anni_per_superare(self, altra_specie: 'Specie') -> int: Metodo per calcolare in quanti anni 
+# la popolazione di questa specie supererà quella di un'altra specie.
+#     getDensita(self, area_kmq: float) -> int: Metodo per calcolare 
+# in quanti anni la popolazione raggiungerà una densità di 1 individuo per km².
+
+ 
+
+# 2. Sottoclassi BufaloKlingon e Elefante
+# Entrambe le sottoclassi animali BufaloKlingon ed Elefante devono ereditare dalla classe base Specie 
+# e devono inizializzare il nome della specie rispettiva.
+ 
+# Formule Matematiche:
+
+#     Aggiornamento della popolazione per l'anno successivo:
+#         Formula: popolazione_nuova = popolazione_attuale x (1 + tasso_crescita/100)
+#     Calcolo della densità di popolazione:
+#         Formula: popolazione / area_kmq
+#         Hint: Loop incrementale che continua ad aggiornare la popolazione finché la densità non raggiunge 1 individuo per km²
+#     Calcolo degli anni necessari per superare la popolazione di un'altra specie:
+#         Hint: Loop incrementale che continua ad aggiornare la popolazione di entrambe le specie
+# finché la popolazione di questa specie non supera quella dell'altra.
+# Per evitare che le popolazioni crescano all'infinito, limitare il numero di anni a 1000. 
+
+'''
+
+class Specie:
+    def __init__(self, nome: str, popolazione: int, tasso_crescita: float):
+        self.nome = nome
+        self.popolazione = popolazione
+        self.tasso_crescita = tasso_crescita
+        
+        
+
+        
+
+    
+    def cresci(self):
+        self.popolazione = int(self.popolazione * (1 + self.tasso_crescita / 100))
+
+
+    def anni_per_superare(self, altra_specie: 'Specie')-> int:
+        anni = 0
+        while self.popolazione <= altra_specie.popolazione:
+            self.cresci()
+            altra_specie.cresci()
+            anni += 1
+        return anni
+        
+        
+        
+        
+            
+    def getDensita(self, area_kmq: float)-> int:
+        anni = 0
+        while self.popolazione / area_kmq < 1:
+            self.cresci()
+            anni += 1
+        return anni
+    
+    
+
+
+class BufaloKlingon(Specie):
+    def __init__(self, popolazione: int, tasso_crescita: float):
+        super().__init__("BufaloKlingon", popolazione, tasso_crescita)
+
+    
+class Elefante(Specie):
+    def __init__(self, popolazione: int, tasso_crescita: float):
+        super().__init__("Elefante", popolazione, tasso_crescita)
+
+
+
+
+
+
+# Creazione delle istanze delle specie
+bufalo_klingon = BufaloKlingon(100, 15)  # Crea un'istanza di BufaloKlingon con popolazione 100 e tasso di crescita 15%
+elefante = Elefante(10, 35)  # Crea un'istanza di Elefante con popolazione 10 e tasso di crescita 35%
+
+# Calcolo degli anni necessari per superare
+anni_necessari = elefante.anni_per_superare(bufalo_klingon)  # Calcola gli anni necessari affinché gli elefanti superino i bufali Klingon
+print(f"Anni necessari perché la popolazione di elefanti superi quella dei bufali Klingon: {anni_necessari}")
+
+# Calcolo della densità di popolazione per i Bufali Klingon
+anni_densita = bufalo_klingon.getDensita(1500)  # Calcola gli anni necessari per raggiungere una densità di 1 bufalo Klingon per km²
+print(f"Anni necessari per raggiungere una densità di 1 Bufalo Klingon per km quadrato: {anni_densita}")
+
+
+'''
+
+
+
+# In questo progetto, dovrai scrivere il codice per un sistema di gestione e creazione dei corsi ITS.
+# Il sistema gestisce aule ed edifici (Parte 1), persone -studenti e docenti- in gruppi di studio (parte 2), e corsi (parte 3).
+ 
+# ### Classe Room:
+# La classe Room rappresenta un'aula. Ogni aula ha un ID (id), un piano (floor), 
+#un numero di posti (seats) e un'area (area). L'area è calcolata come il doppio dei posti.
+# - Metodi:
+#     - get_id(): Restituisce l'ID dell'aula.
+#     - get_floor(): Restituisce il piano dell'aula.
+#     - get_seats(): Restituisce il numero di posti dell'aula.
+#     - get_area(): Restituisce l'area dell'aula.
+
+# ### Classe Building:
+# La classe Building rappresenta un edificio. Ogni edificio ha un nome (name), un indirizzo (address),
+# un intervallo di piani (floors), e una lista di aule (rooms).
+# - Metodi:
+#     - get_floors(): Restituisce l'intervallo di piani dell'edificio.
+#     - get_rooms(): Restituisce la lista delle aule nell'edificio.
+#     - add_room(room): Aggiunge un'aula all'edificio, solo se il piano dell'aula è compreso nell'intervallo di piani dell'edificio.
+#     - area(): Restituisce l'area totale dell'edificio sommando le aree di tutte le aule.
+
+'''
+class Room:
+    def __init__(self, id: int, floor: int, seats: int):
+        self.id = id
+        self.floor = floor
+        self.seats = seats
+        
+        
+
+    def get_id(self):
+        return self.id
+    def get_floor(self):
+        return self.floor
+    def get_seats(self):
+        return self.seats
+    def get_area(self):
+        return self.seats * 2
+    
+
+class Building:
+    def __init__(self, name: str, address: str, floors: int):
+        self.name = name
+        self.address = address
+        self.floors = floors
+        self.rooms = []
+    
+    def get_floors(self):
+        return self.floors
+    
+    def get_rooms(self):
+        return self.rooms
+    
+    
+    def add_room(self, room: Room):
+        ground_floor, last_floor = self.floors
+        if room not in self.rooms:
+            if room.floor in range(ground_floor, last_floor +1):
+                self.rooms.append(room)
+        
+
+    def area(self):
+        total_area = 0
+        for room in self.rooms:
+            total_area += room.get_area()
+        return total_area
+        
+    
+    
+
+
+# Creazione di stanze
+room1 = Room(id="Room1", floor=1, seats=15)
+room2 = Room(id="Room2", floor=5, seats=20)
+room3 = Room(id="Room3", floor=11, seats=10)  # Questo piano è fuori dal range
+
+# Test classe Room
+print("Test classe Room:")
+print(f"ID: {room1.get_id()}, Atteso: Room1")
+print(f"Piano: {room1.get_floor()}, Atteso: 1")
+print(f"Posti: {room1.get_seats()}, Atteso: 15")
+print(f"Area: {room1.get_area()}, Atteso: 30.0")
+
+# Creazione di un edificio
+building = Building(name="Test Building", address="123 Test St", floors=(1, 10))
+
+# Test di inizializzazione Building
+print("\nTest di inizializzazione Building:")
+print(f"Nome: {building.name}, Atteso: Test Building")
+print(f"Indirizzo: {building.address}, Atteso: 123 Test St")
+print(f"Piani: {building.floors}, Atteso: (1, 10)")
+print(f"Stanze iniziali: {building.get_rooms()}, Atteso: []")
+
+# Test aggiunta stanza valida
+building.add_room(room1)
+print("\nDopo aggiunta Room1:")
+print(f"Stanze: {[room.get_id() for room in building.get_rooms()]}, Atteso: [Room1]")
+
+# Test aggiunta stanza su piano non valido
+building.add_room(room3)
+print("\nDopo tentativo di aggiunta Room3 (piano non valido):")
+print(f"Stanze: {[room.get_id() for room in building.get_rooms()]}, Atteso: [Room1]")
+
+# Test aggiunta stanza duplicata
+building.add_room(room1)
+print("\nDopo tentativo di aggiunta duplicato Room1:")
+print(f"Stanze: {[room.get_id() for room in building.get_rooms()]}, Atteso: [Room1]")
+
+# Test calcolo area
+building.add_room(room2)
+print("\nDopo aggiunta Room2:")
+print(f"Area totale: {building.area()}, Atteso: 70.0")
+
+# Test rappresentazione in stringa Building
+print("\nRappresentazione in stringa dell'edificio:")
+print(f"Nome Edificio: {building.name}")
+print(f"Indirizzo Edificio: {building.address}")
+print(f"Piani Edificio: {building.get_floors()}")
+print("Stanze nell'edificio:")
+for room in building.get_rooms():
+    print(f"ID Stanza: {room.get_id()}, Piano: {room.get_floor()}, Posti: {room.get_seats()}, Area: {room.get_area()}")
+print(f"Area totale dell'edificio: {building.area()}m2")
+
+# Verifica valori attesi
+atteso_stanze = ["Room1", "Room2"]
+atteso_area = 70.0
+print(f"\nVerifica finale: Stanze: {[room.get_id() for room in building.get_rooms()]}, Atteso: {atteso_stanze}")
+print(f"Verifica finale: Area totale: {building.area()}, Atteso: {atteso_area}")
+'''
+	
+
+# ### Classi Person, Student e Lecturer:
+# La classe Person rappresenta una persona con un codice fiscale (cf), un nome (name), un cognome (surname), un'età (age).
+# Le classi Student e Lecturer ereditano da Person.
+# Uno studente è associato ad un gruppo di studio (group). Quindi, la classe Student ha il seguente metodo:
+#     - set_group(group): Associa un gruppo di studio allo studente
+
+# ### Classe Group:
+# La classe Group rappresenta un gruppo di studio. Ogni gruppo ha un nome (name), un limite di studenti (limit), una lista di studenti
+# (students) e una lista di docenti (lecturers).
+# - Metodi:
+#     - get_name(): Restituisce il nome del gruppo
+#     - get_limit(): Restituisce il limite di studenti nel gruppo
+#     - get_students(): Resituisce la lista di studenti nel gruppo
+#     - get_limit_lecturers(): Restituisce il limite di docenti nel gruppo. E' consentito 1 docente ogni 10 studenti.
+# Il gruppo può avere almeno 1 docente, anche se ci sono meno di 10 studenti.
+#     - add_student(student): Aggiunge uno studente al gruppo, solo se il limite per gli studenti non è stato raggiunto.
+#     - add_lecturer(lecturer): Aggiunge un docente al gruppo, solo se il limite per i docenti non è stato raggiunto.
+
+'''
+class Person:
+    def __init__(self, cf, name, surname, age):
+        self.cf = cf
+        self.name = name
+        self.surname = surname
+        self.age = age
+        
+
+
+
+
+
+class Student(Person):
+    def __init__(self, cf, name, surname, age):
+        super().__init__(cf, name, surname, age)
+        self.group = None
+
+    def set_group(self, group):
+        self.group = group
+        group.add_student(self)
+
+
+
+
+class Lecturer(Person):
+    def __init__(self, cf, name, surname, age):
+        super().__init__(cf, name, surname, age)
+
+
+class Group:
+    def __init__(self, name, limit):
+        self.name = name
+        self.limit = limit
+        self.students = []
+        self.lecturers = []
+        self.lecturers_limit = limit // 10 + 1
+    def get_name(self):
+        return self.name
+    def get_limit(self):
+        return self.limit
+    def get_students(self):
+        return self.students
+    def get_limit_lecturers(self):
+        return max(1, len(self.students) // 10)
+    def add_student(self, student):
+        if len(self.students) < self.limit and student not in self.students:
+            self.students.append(student)
+            student.set_group(self)
+    def add_lecturer(self, lecturer):
+        if len(self.lecturers) < self.get_limit_lecturers():
+            self.lecturers.append(lecturer)
+    
+
+
+
+# Creazione delle persone
+person1 = Person(cf="CF123", name="John", surname="Doe", age=30)
+student1 = Student(cf="CF456", name="Jane", surname="Smith", age=20)
+lecturer1 = Lecturer(cf="CF789", name="Dr. Emily", surname="Brown", age=45)
+
+# Test della classe Person
+print("Test della classe Person:")
+print(f"CF: {person1.cf}, Atteso: CF123")
+print(f"Nome: {person1.name}, Atteso: John")
+print(f"Cognome: {person1.surname}, Atteso: Doe")
+print(f"Età: {person1.age}, Atteso: 30")
+
+# Test della classe Student
+print("\nTest della classe Student:")
+print(f"CF: {student1.cf}, Atteso: CF456")
+print(f"Nome: {student1.name}, Atteso: Jane")
+print(f"Cognome: {student1.surname}, Atteso: Smith")
+print(f"Età: {student1.age}, Atteso: 20")
+print(f"Gruppo iniziale: {student1.group}, Atteso: None")
+
+# Test metodo set_group della classe Student
+group1 = Group(name="Group A", limit=10)
+student1.set_group(group1)
+print("\nDopo set_group di student1:")
+print(f"Gruppo di student1: {student1.group.get_name()}, Atteso: Group A")
+
+# Test della classe Lecturer
+print("\nTest della classe Lecturer:")
+print(f"CF: {lecturer1.cf}, Atteso: CF789")
+print(f"Nome: {lecturer1.name}, Atteso: Dr. Emily")
+print(f"Cognome: {lecturer1.surname}, Atteso: Brown")
+print(f"Età: {lecturer1.age}, Atteso: 45")
+
+# Creazione di un gruppo e aggiunta di studenti e docenti
+group2 = Group(name="Group B", limit=2)
+group2.add_student(student1)
+group2.add_lecturer(lecturer1)
+
+print("\nDopo aggiunta di student1 e lecturer1 a group2:")
+print(f"Studenti in group2: {[student.cf for student in group2.get_students()]}, Atteso: [CF456]")
+print(f"Docenti in group2: {[lecturer.cf for lecturer in group2.lecturers]}, Atteso: [CF789]")
+
+'''
+
+
+
+
+
+
+# class Room:
+#     def __init__(self, id: int, floor: int, seats: int):
+#         self.id = id
+#         self.floor = floor
+#         self.seats = seats
+        
+        
+
+#     def get_id(self):
+#         return self.id
+#     def get_floor(self):
+#         return self.floor
+#     def get_seats(self):
+#         return self.seats
+#     def get_area(self):
+#         return self.seats * 2
+    
+
+# class Building:
+#     def __init__(self, name: str, address: str, floors: int):
+#         self.name = name
+#         self.address = address
+#         self.floors = floors
+#         self.rooms = []
+    
+#     def get_floors(self):
+#         return self.floors
+    
+#     def get_rooms(self):
+#         return self.rooms
+    
+    
+#     def add_room(self, room: Room):
+#         ground_floor, last_floor = self.floors
+#         if room not in self.rooms:
+#             if room.floor in range(ground_floor, last_floor +1):
+#                 self.rooms.append(room)
+        
+
+#     def area(self):
+#         total_area = 0
+#         for room in self.rooms:
+#             total_area += room.get_area()
+#         return total_area
+
+# class Person:
+#     def __init__(self, cf, name, surname, age):
+#         self.cf = cf
+#         self.name = name
+#         self.surname = surname
+#         self.age = age
+
+# class Student(Person):
+#     def __init__(self, cf, name, surname, age):
+#         super().__init__(cf, name, surname, age)
+#         self.group = None
+
+#     def set_group(self, group):
+#         self.group = group
+#         group.add_student(self)
+
+# class Lecturer(Person):
+#     def __init__(self, cf, name, surname, age):
+#         super().__init__(cf, name, surname, age)
+
+# class Group:
+#     def __init__(self, name, limit):
+#         self.name = name
+#         self.limit = limit
+#         self.students = []
+#         self.lecturers = []
+#         self.lecturers_limit = limit // 10 + 1
+#     def get_name(self):
+#         return self.name
+#     def get_limit(self):
+#         return self.limit
+#     def get_students(self):
+#         return self.students
+#     def get_limit_lecturers(self):
+#         return max(1, len(self.students) // 10)
+#     def add_student(self, student):
+#         if len(self.students) < self.limit and student not in self.students:
+#             self.students.append(student)
+#             student.set_group(self)
+#     def add_lecturer(self, lecturer):
+#         if len(self.lecturers) < self.get_limit_lecturers():
+#             self.lecturers.append(lecturer)
+
+
+# # ### Classe Course:
+# # La classe Course rappresenta un corso accademico. Ogni corso ha un nome (name) e una lista di gruppi (groups).
+# # - Metodi:
+# #     - register(student): Registra uno studente nel primo gruppo disponibile che non ha ancora raggiunto il limite di studenti.
+# #     - get_groups(): Restituisce la lista dei gruppi nel corso.
+# #     - add_group(group): Aggiunge un gruppo al corso.
+# class Course:
+#     def __init__(self, name):
+#         self.name = name
+#         self.groups = []
+
+#     def register(self, student):
+#         for group in self.groups :
+#             if len(group.get_students()) < group.get_limit():
+#                 group.add_student(student)
+#                 break
+            
+                
+            
+            
+            
+    
+#     def get_groups(self):
+#         return self.groups
+    
+#     def add_group(self, group):
+#         self.groups.append(group)
+
+
+
+
+
+# # Creazione degli edifici
+# smi = Building(name="SMI", address="Via Sierra Nevada 60", floors=(-2, 3))
+# armellini = Building(name="ITIS", address="Basilica San Paolo", floors=(0, 4))
+
+# # Aggiunta delle stanze all'edificio smi
+# smi.add_room(Room(id="123", floor=3, seats=32))
+# smi.add_room(Room(id="333", floor=0, seats=42))
+# smi.add_room(Room(id="111", floor=6, seats=32))  # Questa stanza non viene aggiunta perché è fuori dal range dei piani
+# smi.add_room(Room(id="111", floor=-1, seats=32))
+
+# # Aggiunta delle stanze all'edificio smi
+# armellini.add_room(Room(id="567", floor=3, seats=22))
+# armellini.add_room(Room(id="888", floor=0, seats=32))
+# armellini.add_room(Room(id="999", floor=6, seats=22))  # Questa stanza non viene aggiunta perché è fuori dal range dei piani
+# armellini.add_room(Room(id="999", floor=2, seats=22))
+
+# # Output dei risultati
+# print("### SMI ###")
+# print(f"Stanze nell'edificio SMI: {[room.get_id() for room in smi.get_rooms()]}")
+# print(f"Area totale dell'edificio SMI: {smi.area()} m²")
+# print("### ARMELLINI ###")
+# print(f"Stanze nell'edificio ITIS: {[room.get_id() for room in armellini.get_rooms()]}")
+# print(f"Area totale dell'edificio ITIS: {armellini.area()} m²")
+
+
+# # Creazione dei gruppi
+# fullstack = Group(name="Fullstack", limit=1)
+# cloud = Group(name="Cloud", limit=10)
+# cyber = Group(name="Cyber", limit=10)
+
+# # Creazione di un corso e aggiunta dei gruppi al corso
+# course = Course(name="Python")
+# course.add_group(fullstack)
+# course.add_group(cloud)
+# course.add_group(cyber)
+
+# # Registrazione degli studenti al corso
+# course.register(Student(cf="1234", name="Flavio", surname="Maggi", age=29))
+# course.register(Student(cf="5678", name="Toni", surname="Mancini", age=46))
+# course.register(Student(cf="9101", name="Luca", surname="Bianchi", age=25))
+# course.register(Student(cf="2345", name="Marco", surname="Rossi", age=32))
+# course.register(Student(cf="6789", name="Paolo", surname="Verdi", age=38))
+# course.register(Student(cf="1011", name="Giulia", surname="Neri", age=21))
+# course.register(Student(cf="3456", name="Anna", surname="Gialli", age=27))
+# course.register(Student(cf="7890", name="Maria", surname="Blu", age=35))
+# course.register(Student(cf="1112", name="Sara", surname="Viola", age=23))
+# course.register(Student(cf="4567", name="Giovanni", surname="Arancione", age=31))
+# course.register(Student(cf="8901", name="Andrea", surname="Rosa", age=24))
+# course.register(Student(cf="1123", name="Matteo", surname="Marrone", age=30))
+# course.register(Student(cf="5678", name="Toni", surname="Mancini", age=46))
+
+# print("### COURSE DETAILS ###")
+# print(f"Studenti nel gruppo Fullstack: {[student.cf for student in fullstack.get_students()]}")
+# print(f"Studenti nel gruppo Cloud: {[student.cf for student in cloud.get_students()]}")
+# print(f"Studenti nel gruppo Cyber: {[student.cf for student in cyber.get_students()]}")
+
+
+
+
+
+
+
+
+# Obiettivo:
+# Implementare una classe Media che rappresenti un media generico (ad esempio, un film o un libro) 
+# e una classe derivata Film che rappresenti specificamente un film. 
+# Gli studenti dovranno anche creare oggetti di queste classi, aggiungere valutazioni e visualizzare le recensioni.
+
+# Specifiche della Classe Media:
+ 
+# Attributi:
+# - title (stringa): Il titolo del media.
+# - reviews (lista di interi): Una lista di valutazioni del media, con voti compresi tra 1 e 5.
+
+# Metodi:
+# - set_title(self, title): Imposta il titolo del media.
+# - get_title(self): Restituisce il titolo del media.
+# - aggiungiValutazione(self, voto): Aggiunge una valutazione alla lista delle recensioni se è valida (tra 1 e 5).
+# - getMedia(self): Calcola e restituisce la media delle valutazioni.
+# - getRate(self): Restituisce una stringa che descrive il giudizio medio del media basato sulla media delle valutazioni.
+# - ratePercentage(self, voto): Calcola e restituisce la percentuale di un voto specifico nelle recensioni.
+# - recensione(self): Mostra un riassunto delle recensioni e delle valutazioni del media, stampando il titolo, 
+# il voto medio, il giudizio e le percentuali di ciascun voto. Esempio di riassunto:
+ 
+# Titolo del Film: The Shawshank Redemption
+# Voto Medio: 3.80
+# Giudizio: Bello
+# Terribile: 10.00%
+# Brutto: 10.00%
+# Normale: 10.00%
+# Bello: 30.00%
+# Grandioso: 40.00%
+
+# Si verifichi il funzionamento scrivendo un codice che crei almeno due oggetti di tipo Film,
+# aggiunga a ognuno dei due almeno dieci valutazioni e richiami il metodo recensione().
+
+
+
+class Media:
+    def __init__(self, title, reviews):
+        self.title = title
+        self.reviews = reviews
+
+    def set_title(self, title):
+        self.title = title
+        return self
+    def get_title(self):
+        return self.title
+    def aggiungiValutazione(self, voto):
+        if 1 <= voto <= 5:
+            self.reviews.append(voto)
+    def getMedia(self):
+        return sum(self.reviews) / len(self.reviews)
+    def getRate(self):
+        media = self.getMedia()
+        if media < 2:
+            return "Terribile"
+        elif media < 3:
+            return "Brutto"
+        elif media < 4:
+            return "Normale"
+        elif media < 5:
+            return "Bello"
+        elif media < 6:
+            return "Grandioso"
+    # def ratePercentage(self, voto):
+    #     return (self.reviews.count(voto) / len(self.reviews)) * 100
+    # def recensione(self):
+    #     print(f"Titolo del Film: {self.title}")
+    #     print(f"Voto Medio: {self.getMedia():.2f}")
+    #     print(f"Giudizio: {self.getRate()}")
+    #     print(f"Terribile: {self.ratePercentage(1):.2f}%")
+    #     print(f"Brutto: {self.ratePercentage(2):.2f}%")
+    #     print(f"Normale: {self.ratePercentage(3):.2f}%")
+    #     print(f"Bello: {self.ratePercentage(4):.2f}%")
+    #     print(f"Grandioso: {self.ratePercentage(5):.2f}%")
+
+
+class Film(Media):
+    def __init__(self, title):
+        super().__init__(title)
+        self.reviews = []
+    def ratePercentage(self, voto):
+        return (self.reviews.count(voto) / len(self.reviews)) * 100
+    def recensione(self):
+        print(f"Titolo del Film: {self.title}")
+        print(f"Voto Medio: {self.getMedia():.2f}")
+        print(f"Giudizio: {self.getRate()}")
+        print(f"Terribile: {self.ratePercentage(1):.2f}%")
+        print(f"Brutto: {self.ratePercentage(2):.2f}%")
+        print(f"Normale: {self.ratePercentage(3):.2f}%")
+        print(f"Bello: {self.ratePercentage(4):.2f}%")
+        print(f"Grandioso: {self.ratePercentage(5):.2f}%")
+
+
+
+
+titolo = Film('Eragon')
+titolo.aggiungiValutazione(5)
+titolo.aggiungiValutazione(4)
+titolo.aggiungiValutazione(3)
+titolo.aggiungiValutazione(2)
+titolo.aggiungiValutazione(1)
+titolo.recensione()
+print(titolo.getMedia())
