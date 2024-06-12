@@ -226,14 +226,6 @@ def word_break(s: str, wordDict: list[str]) -> bool:
 
 
 
-
-
-
-
-
-
-
-
 print(word_break("leetcode",["leet","code"]))
 
 print(word_break("applepenapple", ["apple","pen"]))
