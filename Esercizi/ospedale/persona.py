@@ -7,22 +7,20 @@
 
 
 class Persona:
-    def __init__(self, nome:str, cognome:str, età:int):
+    def __init__(self, nome:str, cognome:str):
         self.nome = nome
         self.cognome = cognome
-        self.età = età
-    
-    def __init__(self,first_name, last_name):
-        if not isinstance(first_name, str):
+        
+        if not isinstance(self.nome, str):
             print("Il nome inserito non è una stringa!")
             self.nome = None
         else:
-            self.nome = first_name
-            if not isinstance(last_name, str):
+            self.nome = self.nome
+            if not isinstance(self.cognome, str):
                 print("Il cognome inserito non è una stringa!")
                 self.cognome = None
             else:
-                self.cognome = last_name
+                self.cognome = self.cognome
                 self.età = 0
                 
     def setName(self, first_name):

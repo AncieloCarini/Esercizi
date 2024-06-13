@@ -15,19 +15,31 @@
 #          ID: {codice identificativo}"
 
 
-from persona import Persona
+from ospedale.persona import Persona
 
 class Paziente(Persona):
-    def __init__(self, nome, cognome, eta, idCode):
-        super().__init__(nome, cognome, eta)
-        self.__idCode = idCode
-        self.__nome = nome
-        self.__cognome = cognome
-        self.__eta = eta
+    def __init__(self, nome, cognome, id_Code):
+        super().__init__(nome, cognome)
+        #self.__nome = nome
+        #self.__cognome = cognome
+        #self.età = età
+
+        if isinstance(id_Code, str):
+            self.__id_Code = id_Code
+        else:
+            self.__id_Code = None
         
-    def setIdCode(self, idCode):
-        self.__idCode = idCode
-        return self.__idCode
-    
+    def setIdCode(self, id_Code):
+        #self.__idCode = idCode
+        #return self.__idCode
+
+        if isinstance(id_Code, str):
+            self.__id_Code = id_Code
+        else:
+            self.__id_Code = None
+
     def getIdCode(self):
-        pass
+        return self.__id_Code
+    
+    def patientInfo(self):
+        print(f"Paziente: {self.getName} {self.getLastname}\n ID: {self.getIdCode}")
